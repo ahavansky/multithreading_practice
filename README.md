@@ -4,9 +4,9 @@ This README would normally document whatever steps are necessary to get your app
 
 ### What is this repository for? ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* Test application for mobile school. It includes recycler vew.
+* Version 1.0
+* [Maria Rybalkina]
 
 ### How do I get set up? ###
 
