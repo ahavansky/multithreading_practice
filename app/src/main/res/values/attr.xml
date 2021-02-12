@@ -2,7 +2,6 @@
 <resources>
     <declare-styleable name="ArcBar">
         <attr name="progressWidth" format="dimension" />
-        <attr name="progressWidthScaleRatio" format="integer" />
         <attr name="arcWidth" format="dimension" />
         <attr name="arcColor" format="color" />
         <attr name="progressColor" format="color" />

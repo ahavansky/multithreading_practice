@@ -1,18 +1,18 @@
 package smart.sprinkler.app;
 
-import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import smart.sprinkler.app.view.WaterAreaGroup;
 
@@ -58,7 +58,7 @@ public class WaterControlFragment extends Fragment {
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
+    public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBooleanArray(KEY_SCHEDULED_ARR, mWaterAreaGroup.waterSchedulerState());
     }
@@ -69,9 +69,9 @@ public class WaterControlFragment extends Fragment {
         View myView = inflater.inflate(R.layout.fragment_control_water, null);
 
         // create weathercast list
-        ListView weatherCastList = myView.findViewById(R.id.weatherCastListView);
-        weatherCastList.setAdapter(new WeathercastArrayAdapter(getActivity(),
-                R.layout.item_weathercast, mWeathercastData));
+        RecyclerView weatherCastList = myView.findViewById(R.id.weatherCastListView);
+        weatherCastList.setLayoutManager(new LinearLayoutManager(inflater.getContext(), LinearLayoutManager.VERTICAL, false));
+        weatherCastList.setAdapter(new WeathercastViewAdapter(R.layout.item_weathercast, mWeathercastData));
 
         // temp, humidity TextViews
         TextView conditionsTemp = myView.findViewById(R.id.waterControlValueTemp);
@@ -81,13 +81,10 @@ public class WaterControlFragment extends Fragment {
 
         //sprinkle checkbox
         final CheckBox sprinkler = myView.findViewById(R.id.water_control_sprinkle);
-        sprinkler.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!sprinkler.isChecked()) {
-                    for (int i = 0; i < WATER_AREA_NUMBER; i++) {
-                        mWaterAreaGroup.setWateringScheduler(i, false);
-                    }
+        sprinkler.setOnClickListener(v -> {
+            if (!sprinkler.isChecked()) {
+                for (int i = 0; i < WATER_AREA_NUMBER; i++) {
+                    mWaterAreaGroup.setWateringScheduler(i, false);
                 }
             }
         });
@@ -124,29 +121,54 @@ public class WaterControlFragment extends Fragment {
         }
     }
 
-    private class WeathercastArrayAdapter extends ArrayAdapter<Weathercast> {
+    public static class WeatherViewHolder extends RecyclerView.ViewHolder {
+        private TextView mDateView;
+        private TextView mWeatherView;
+
+        public WeatherViewHolder(@NonNull View itemView) {
+            super(itemView);
+            mDateView = itemView.findViewById(R.id.item_weathercast_date);
+            mWeatherView = itemView.findViewById(R.id.item_weathercast_weather);
+        }
+    }
+
+    private class WeathercastViewAdapter extends RecyclerView.Adapter<WeatherViewHolder> {
+        private final Weathercast[] mWeathercasts;
         private final int layoutResourceId;
 
-        public WeathercastArrayAdapter(Context context, int resource, Weathercast[] objects) {
-            super(context, resource, objects);
-            this.layoutResourceId = resource;
+        WeathercastViewAdapter(int resource, Weathercast[] objects) {
+            mWeathercasts = objects;
+            layoutResourceId = resource;
+        }
+
+        @NonNull
+        @Override
+        public WeatherViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View v = LayoutInflater.from(parent.getContext()).inflate(layoutResourceId, parent, false);
+            return new WeatherViewHolder(v);
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            Weathercast weathercastItem = getItem(position);
+        public void onBindViewHolder(@NonNull WeatherViewHolder holder, int position) {
+            if (mWeathercasts == null || position < 0 || position >= mWeathercasts.length) {
+                return;
+            }
+            Weathercast weathercastItem = mWeathercasts[position];
 
-            // Inflate layout and display data
-            View item = LayoutInflater.from(getContext()).inflate(this.layoutResourceId, null);
-            TextView date = (TextView) item.findViewById(R.id.item_weathercast_date);
-            date.setText(weathercastItem.date);
-
-            TextView weather = (TextView) item.findViewById(R.id.item_weathercast_weather);
-            weather.setText(getString(R.string.value_degree, weathercastItem.temp));
+            holder.mDateView.setText(weathercastItem.date);
+            holder.mWeatherView.setText(getString(R.string.value_degree, weathercastItem.temp));
             Drawable weatherIcon = getResources().getDrawable(weathercastItem.bg_id);
             weatherIcon.setBounds(0, 0, 240, 160);
-            weather.setCompoundDrawables(weatherIcon, null, null, null);
-            return item;
+            holder.mWeatherView.setCompoundDrawables(weatherIcon, null, null, null);
+        }
+
+        @Override
+        public int getItemCount() {
+            if (mWeathercasts == null) {
+                return 0;
+            } else {
+                return mWeathercasts.length;
+            }
         }
     }
 }

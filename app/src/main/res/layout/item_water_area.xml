@@ -21,24 +21,16 @@
         android:gravity="center_vertical"
         android:singleLine="true"
         android:textAppearance="@android:style/TextAppearance.Large"
-        android:textColor="@color/default_text"
-        android:clickable="false"
-        android:focusableInTouchMode="false"
-        android:focusable="false"
-        android:duplicateParentState="false"
-        android:longClickable="false"/>
+        android:textColor="@color/default_text"/>
 
     <CheckBox
         android:id="@+id/water_area_indicator"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/radiobutton_text_padding"
-        android:layout_weight="0"
         android:button="@android:drawable/btn_radio"
         android:clickable="false"
         android:focusableInTouchMode="false"
         android:focusable="false"
-        android:duplicateParentState="false"
-        android:longClickable="false"
-        android:enabled="false"/>
+        android:longClickable="false" />
 </LinearLayout>
