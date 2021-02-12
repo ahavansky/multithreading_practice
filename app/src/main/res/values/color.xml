@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="blue_pale">#4000ddff</color>
+    <color name="selected_waterarea_text">#0c90ef</color>
+    <color name="default_text">#80808F</color>
+    <color name="blue_solid">#0000bb</color>
+    <color name="grey_average">#777777</color>
+    <color name="notif">#ff972e</color>
+    <color name="notif_pressed">#9c5b1a</color>
+</resources>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="control_water_weathercast_img">
+        <item>@drawable/rain</item>
+        <item>@drawable/cloudy</item>
+        <item>@drawable/partly_cloudy</item>
+    </array>
+
+    <integer-array name="control_water_weathercast_temp">
+        <item>23</item>
+        <item>23</item>
+        <item>25</item>
+    </integer-array>
+
+    <integer-array name="water_control_scheduler_state">
+        <item>0</item>
+        <item>1</item>
+        <item>0</item>
+        <item>1</item>
+        <item>0</item>
+    </integer-array>
+
+    <integer-array name="water_control_indicator_state">
+        <item>0</item>
+        <item>0</item>
+        <item>1</item>
+        <item>0</item>
+        <item>0</item>
+    </integer-array>
+
+    <integer name="current_temp">24</integer>
+    <integer name="current_humidity">73</integer>
+</resources>

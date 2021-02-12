@@ -1,3 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">RecycleViewExample</string>
+
+    <string name="app_name">SmartSprinkler</string>
+
+    <!-- Styled strings -->
+    <string name="value_degree">%d°</string>
+    <string name="value_percent">%d%%</string>
+
+    <!-- Notifications -->
+    <string name="weather_notification_text">Current weather conditions expect it to rain tomorrow.\n\nThe next scheduling cycle will be skipped.</string>
+    <string name="notification_number">1</string>
+
+    <!-- Water control page-->
+    <string name="water_control_temp">Temp</string>
+    <string name="water_control_humid">Humidity</string>
+
+    <string-array name="waterArea">
+        <item>Backyard</item>
+        <item>Back Patio</item>
+        <item>Front Yard</item>
+        <item>Garden</item>
+        <item>Porch</item>
+    </string-array>
+
+    <string-array name="waeathercast_date">
+        <item name="today">February 7, 2020</item>
+        <item name="tomorrow">February 8, 2020</item>
+        <item name="next">February 9, 2020</item>
+    </string-array>
+
+    <string name="cont_descr_sprinkler">watering</string>
 </resources>

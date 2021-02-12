@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="fill_parent">
+
+    <CheckBox
+        android:id="@+id/water_area_scheduler"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:gravity="center_vertical"/>
+
+    <View style="@style/horizontal_space"/>
+
+    <TextView
+        android:id="@+id/water_area_label"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:fontFamily="sans-serif-thin"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:textAppearance="@android:style/TextAppearance.Large"
+        android:textColor="@color/default_text"
+        android:clickable="false"
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+        android:duplicateParentState="false"
+        android:longClickable="false"/>
+
+    <CheckBox
+        android:id="@+id/water_area_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/radiobutton_text_padding"
+        android:layout_weight="0"
+        android:button="@android:drawable/btn_radio"
+        android:clickable="false"
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+        android:duplicateParentState="false"
+        android:longClickable="false"
+        android:enabled="false"/>
+</LinearLayout>

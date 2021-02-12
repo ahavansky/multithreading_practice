@@ -1,0 +1,30 @@
+<resources>
+    <dimen name="control_icon_side">160dp</dimen>
+    <!-- Notifications -->
+    <dimen name="notification_layout_padding">20dp</dimen>
+    <dimen name="notification_message_padding">50dp</dimen>
+    <dimen name="notification_btn_width">150dp</dimen>
+    <dimen name="notification_btn_height">50dp</dimen>
+    <dimen name="notification_point_width">60dp</dimen>
+    <dimen name="notification_point_height">60dp</dimen>
+
+    <!-- Custom radiobutton-->
+    <dimen name="radiobutton_text_padding">30dp</dimen>
+    <dimen name="radiobutton_side_margin">30dp</dimen>
+
+    <!-- Water control page -->
+    <dimen name="weathercast_item_bottom_margin">8dp</dimen>
+    <dimen name="waterarea_list_side_margin">50dp</dimen>
+
+    <!-- Text size-->
+    <dimen name="weathercast_item_date_text_size">18dp</dimen>
+    <dimen name="small_text_size">36dp</dimen>
+    <dimen name="default_text_size">42dp</dimen>
+    <dimen name="weathercast_item_temperature_text_size">50dp</dimen>
+
+    <!-- ArcBar control -->
+    <dimen name="progress_line_width">26dp</dimen>
+    <dimen name="arc_line_width">26dp</dimen>
+    <dimen name="arcbar_width">140dp</dimen>
+    <dimen name="arcbar_height">140dp</dimen>
+</resources>

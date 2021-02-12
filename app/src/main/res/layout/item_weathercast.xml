@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/item_weathercast_date"
+        style="@style/defaultTextView"
+        android:textSize="@dimen/weathercast_item_date_text_size"/>
+
+    <TextView
+        android:id="@+id/item_weathercast_weather"
+        style="@style/defaultTextView"
+        android:layout_marginBottom="@dimen/weathercast_item_bottom_margin"
+        android:gravity="right|top"
+        android:textColor="@color/default_text"
+        android:textSize="@dimen/weathercast_item_temperature_text_size" />
+</LinearLayout>
