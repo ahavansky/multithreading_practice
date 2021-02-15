@@ -29,7 +29,7 @@ object RetrofitClient {
             .build()
     }
 
-    fun getWeatherForecast(): Single<WeatherForecast> {
+    fun getWeatherForecast(): Call<WeatherForecast> {
         return api.getWeatherForecast()
     }
 

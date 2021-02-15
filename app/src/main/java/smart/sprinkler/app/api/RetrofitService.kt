@@ -23,7 +23,7 @@ interface RetrofitService {
         ).joinToString(separator = ","),
         @Query("units") units: String = "metric",
         @Query("appId") apiKey: String = API_KEY
-    ): Single<WeatherForecast>
+    ): Call<WeatherForecast>
 
     @GET("data/2.5/weather")
     fun getCurrentWeatherForecast(
