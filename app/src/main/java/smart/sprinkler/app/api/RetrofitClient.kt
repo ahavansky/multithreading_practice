@@ -1,7 +1,7 @@
 package smart.sprinkler.app.api
 
-import io.reactivex.rxjava3.core.Single
 import okhttp3.OkHttpClient
+import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -35,5 +35,9 @@ object RetrofitClient {
 
     fun getCurrentWeather(): Call<CurrentWeatherForecast> {
         return api.getCurrentWeatherForecast()
+    }
+
+    fun getImage(imageCode: String): Call<ResponseBody> {
+        return api.getWeatherImage(imageCode)
     }
 }

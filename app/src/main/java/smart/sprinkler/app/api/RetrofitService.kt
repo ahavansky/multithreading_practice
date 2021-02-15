@@ -1,9 +1,10 @@
 package smart.sprinkler.app.api
 
-import io.reactivex.rxjava3.core.Single
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
+import retrofit2.http.Url
 import smart.sprinkler.app.api.model.CurrentWeatherForecast
 import smart.sprinkler.app.api.model.WeatherForecast
 
@@ -33,4 +34,7 @@ interface RetrofitService {
         @Query("appId") apiKey: String = API_KEY,
         @Query("units") units: String = "metric"
     ): Call<CurrentWeatherForecast>
+
+    @GET
+    fun getWeatherImage(@Url imageUrl: String): Call<ResponseBody>
 }
