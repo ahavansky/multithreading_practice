@@ -15,8 +15,10 @@ public class ControlActivity extends FragmentActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_control);
-        FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction().add(R.id.water_control, new WaterControlFragment()).commit();
+        if (savedInstanceState == null) {
+            FragmentManager fm = getSupportFragmentManager();
+            fm.beginTransaction().replace(R.id.water_control, new WaterControlFragment()).commit();
+        }
     }
 
     public void onNotificationViewClick(View v) {

@@ -1,0 +1,36 @@
+package smart.sprinkler.app.api
+
+import io.reactivex.rxjava3.core.Single
+import retrofit2.Call
+import retrofit2.http.GET
+import retrofit2.http.Query
+import smart.sprinkler.app.api.model.CurrentWeatherForecast
+import smart.sprinkler.app.api.model.WeatherForecast
+
+private const val API_KEY = "92dd28f1dc9baf629b40f09a07ff87ac"
+
+interface RetrofitService {
+
+    @GET("data/2.5/onecall")
+    fun getWeatherForecast(
+        @Query("lat") latitude: Double = 56.302947,
+        @Query("lon") longitude: Double = 44.021527,
+        @Query("exclude") exclude: String = arrayOf(
+            "current",
+            "minutely",
+            "hourly",
+            "alerts"
+        ).joinToString(separator = ","),
+        @Query("units") units: String = "metric",
+        @Query("appId") apiKey: String = API_KEY
+    ): Single<WeatherForecast>
+
+    @GET("data/2.5/weather")
+    fun getCurrentWeatherForecast(
+        @Query("q") place: String = arrayOf(
+            "Nizhniy Novgorod", "RUS"
+        ).joinToString(separator = ","),
+        @Query("appId") apiKey: String = API_KEY,
+        @Query("units") units: String = "metric"
+    ): Call<CurrentWeatherForecast>
+}
