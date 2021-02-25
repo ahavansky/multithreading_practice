@@ -41,9 +41,8 @@ dependencies {
     implementation "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    implementation 'io.reactivex.rxjava3:rxjava:3.0.10'
-    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0'
 }
 repositories {
     mavenCentral()
