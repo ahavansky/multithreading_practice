@@ -1,8 +1,10 @@
 package smart.sprinkler.app;
 
+import android.app.Activity;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +16,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import smart.sprinkler.app.api.RetrofitClient;
+import smart.sprinkler.app.api.model.CurrentWeatherForecast;
+import smart.sprinkler.app.executors.WeatherApiExecutor;
 import smart.sprinkler.app.view.WaterAreaGroup;
 
 public class WaterControlFragment extends Fragment {
+    private static final String TAG = WaterControlFragment.class.getSimpleName();
     public final static int WATER_AREA_NUMBER = 5;
     private String[] mWaterArea = new String[WATER_AREA_NUMBER];
     private final static int WEATHERCAST_DAYS = 3;
@@ -27,6 +33,9 @@ public class WaterControlFragment extends Fragment {
     private boolean[] mWaterAreaIndicator;
     private WaterAreaGroup mWaterAreaGroup;
     private static final String KEY_SCHEDULED_ARR = "scheduled";
+    private WeatherApiExecutor mWeatherApiExecutor;
+    private TextView mConditionsTemp;
+    private TextView mConditionsMoisture;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,6 +61,11 @@ public class WaterControlFragment extends Fragment {
             // Array for initial scheduled areas;
             mWaterAreaScheduler = getBooleanArray(getResources().getIntArray(R.array
                     .water_control_scheduler_state));
+
+            Activity activity = getActivity();
+            if (activity != null) {
+                mWeatherApiExecutor = WeatherApiExecutor.Companion.getInstance(activity.getMainLooper());
+            }
         } else {
             mWaterAreaScheduler = savedInstanceState.getBooleanArray(KEY_SCHEDULED_ARR);
         }
@@ -74,10 +88,10 @@ public class WaterControlFragment extends Fragment {
         weatherCastList.setAdapter(new WeathercastViewAdapter(R.layout.item_weathercast, mWeathercastData));
 
         // temp, humidity TextViews
-        TextView conditionsTemp = myView.findViewById(R.id.waterControlValueTemp);
-        conditionsTemp.setText(getString(R.string.value_degree, getResources().getInteger(R.integer.current_temp)));
-        TextView conditionsMoisture = myView.findViewById(R.id.waterControlValueHumidity);
-        conditionsMoisture.setText(getString(R.string.value_percent, getResources().getInteger(R.integer.current_humidity)));
+        mConditionsTemp = myView.findViewById(R.id.waterControlValueTemp);
+        mConditionsTemp.setText(getString(R.string.value_degree, getResources().getInteger(R.integer.current_temp)));
+        mConditionsMoisture = myView.findViewById(R.id.waterControlValueHumidity);
+        mConditionsMoisture.setText(getString(R.string.value_percent, getResources().getInteger(R.integer.current_humidity)));
 
         //sprinkle checkbox
         final CheckBox sprinkler = myView.findViewById(R.id.water_control_sprinkle);
@@ -98,6 +112,38 @@ public class WaterControlFragment extends Fragment {
         }
 
         return myView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mWeatherApiExecutor.execute(
+                RetrofitClient.INSTANCE::getCurrentWeather,
+                currentWeather -> {
+                    mConditionsTemp.setText(String.valueOf(currentWeather.getWeather().getTemp()));
+                    mConditionsMoisture.setText(String.valueOf(currentWeather.getWeather().getHumidity()));
+                    return null;
+                },
+                error -> {
+                    Log.d(TAG, "getCurrentWeather() error");
+                    return null;
+                },
+                true,
+                CurrentWeatherForecast.class
+        );
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Activity activity = getActivity();
+        if (activity != null) {
+            if (activity.isFinishing()) {
+                WeatherApiExecutor.Companion.shutdown();
+            } else {
+                mWeatherApiExecutor.pause();
+            }
+        }
     }
 
     private boolean[] getBooleanArray(int[] iArray) {
