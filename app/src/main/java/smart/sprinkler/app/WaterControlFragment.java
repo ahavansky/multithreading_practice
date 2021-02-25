@@ -11,10 +11,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import smart.sprinkler.app.view.WaterAreaGroup;
+import smart.sprinkler.app.viewmodels.WeatherViewModel;
 
 public class WaterControlFragment extends Fragment {
     public final static int WATER_AREA_NUMBER = 5;
@@ -27,6 +29,7 @@ public class WaterControlFragment extends Fragment {
     private boolean[] mWaterAreaIndicator;
     private WaterAreaGroup mWaterAreaGroup;
     private static final String KEY_SCHEDULED_ARR = "scheduled";
+    private WeatherViewModel mViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,10 +51,12 @@ public class WaterControlFragment extends Fragment {
         mWaterAreaIndicator = getBooleanArray(getResources().getIntArray(R.array
                 .water_control_indicator_state));
 
+
         if (savedInstanceState == null) {
             // Array for initial scheduled areas;
             mWaterAreaScheduler = getBooleanArray(getResources().getIntArray(R.array
                     .water_control_scheduler_state));
+            mViewModel = new ViewModelProvider(this).get(WeatherViewModel.class);
         } else {
             mWaterAreaScheduler = savedInstanceState.getBooleanArray(KEY_SCHEDULED_ARR);
         }
@@ -96,6 +101,10 @@ public class WaterControlFragment extends Fragment {
             mWaterAreaGroup.setWateringIndicator(k, mWaterAreaIndicator[k]);
             mWaterAreaGroup.setWateringScheduler(k, mWaterAreaScheduler[k]);
         }
+
+        mViewModel.getDailyForecast().observe(getViewLifecycleOwner(), dailyForecasts -> {
+            // ui retated actions
+        });
 
         return myView;
     }
